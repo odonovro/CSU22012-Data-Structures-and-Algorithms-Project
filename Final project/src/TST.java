@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 public class TST {
 	
@@ -28,6 +28,5 @@ public class TST {
 		head = null;
 		}
 	
-	
-
+	void insert(){}
 }

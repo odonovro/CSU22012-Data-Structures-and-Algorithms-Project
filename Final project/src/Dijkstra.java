@@ -57,48 +57,76 @@ public class Dijkstra {
 			Scanner txt = new Scanner(file);
 	    	
 	    	String line = txt.nextLine();
-	    	while (txt.hasNextLine()) {
-	    		line = txt.nextLine();
-    			String[] temp = line.split(",");
     			
-    			if (isTransfers) {
-    				int from_stop = Integer. parseInt(temp[0]);
-    				int to_stop = Integer. parseInt(temp[1]);
-    				int type = Integer. parseInt(temp[2]);
-    				String transfer_time;
-    				if (type == 2) {transfer_time = temp[3];}
-    				else {transfer_time = "";}
+    		if (isTransfers) {
+    			while (txt.hasNextLine()) {
+    		    		line = txt.nextLine();
+    	    			String[] temp = line.split(",");
+    	    			int from_stop = Integer. parseInt(temp[0]);
+    	    			int to_stop = Integer. parseInt(temp[1]);
+    	    			int type = Integer. parseInt(temp[2]);
+    	    			String transfer_time;
+    	    			if (type == 2) {transfer_time = temp[3];}
+    	    			else {transfer_time = "";}
     				
-    				Node curNode = arrayOfNodes[from_stop];
-    				if (curNode.next == null) {
-    					curNode.next = new linkedList(arrayOfNodes[to_stop], type, transfer_time);
+    	    			Node curNode = arrayOfNodes[from_stop];
+    	    			if (curNode.next == null) {
+    	    				curNode.next = new linkedList(arrayOfNodes[to_stop], type, transfer_time);
+    	    			}
+    	    			else {
+    	    				linkedList nextToCurNode = curNode.next;
+    	    				while (true) {
+    	    					if (nextToCurNode.next == null) {
+    	    						nextToCurNode.next = new linkedList(arrayOfNodes[to_stop], type, transfer_time);
+    	    						break;
+    	    					}
+    	    					nextToCurNode = nextToCurNode.next;
+    	    				}
+    	    			}
     				}
-    				else {
-    				linkedList nextToCurNode = curNode.next;
-    				while (true) {
-    					if (nextToCurNode.next == null) {
-    						nextToCurNode.next = new linkedList(arrayOfNodes[to_stop], type, transfer_time);
-    						break;
-    					}
-    					nextToCurNode = nextToCurNode.next;
-    				}}
-    			}
-    			else { //TODO
-    				int from_stop = Integer. parseInt(temp[3]);
-    				int to_stop = (Integer) null;
+    		}
+    		else { //TODO
+    			int last_stop = -1;
+    			int tripID = -1;
+				int sque = -1;
+				
+				int preTripID = -1;
+				int preSque = -1;
+				
+    			while (txt.hasNextLine()) {
+    				line = txt.nextLine();
+    				String[] temp = line.split(",");
+    				int cur_stop = Integer.parseInt(temp[3]);
     				int type = 1;
     				String transfer_time = "";
     				
-    				Node curNode = arrayOfNodes[from_stop];
+    				tripID = Integer.parseInt(temp[0]);
+    				sque = Integer.parseInt(temp[4]);
     				
-    				while (true) {
-    					if (curNode.next == null) {
-    						curNode.next = new linkedList(arrayOfNodes[to_stop], type, transfer_time);
-    						break;
+    				if (tripID != -1 && preSque != -1) {
+    					Node curNode = arrayOfNodes[last_stop];
+    					if ((sque - preSque == 1 && tripID == preTripID) || (sque - preSque != 1 && tripID != preTripID)) {
+    						if (curNode.next == null) {
+    							curNode.next = new linkedList(arrayOfNodes[cur_stop], type, transfer_time);
+    						}
+    						else {
+    							linkedList nextToCurNode = curNode.next;
+    							while (true) {
+    								if (nextToCurNode.next == null) {
+    									nextToCurNode.next = new linkedList(arrayOfNodes[cur_stop], type, transfer_time);
+    									break;
+    								}
+    								nextToCurNode = nextToCurNode.next;
+    							}
+    						}
     					}
+    					else {System.out.println("File not formated correctly");}
     				}
+    				last_stop = cur_stop;
+    				preTripID = tripID;
+    				preSque = sque;
     			}
-	    	}
+    		}
 	    	txt.close();
 			
 		} catch (FileNotFoundException e) {
@@ -150,13 +178,15 @@ public class Dijkstra {
     	
     	graph myGraph = new graph();
     	
-    	File myFile = new File("transfers.txt");
+    	File transFile = new File("transfers.txt");
+    	File stopTimeFile = new File("stop_times.txt");
     	
-    	addToGraph(myFile, true, myGraph);
+    	addToGraph(transFile, true, myGraph);
+    	addToGraph(stopTimeFile, false, myGraph);
     	
     	System.out.println("graph done");
     	
-    	Node start = myGraph.arrayOfNodes[10860];
+    	Node start = myGraph.arrayOfNodes[646];
     	
     	int [][] test = runDijkstra(start, myGraph);
     	
