@@ -105,7 +105,7 @@ public class Dijkstra {
     				
     				if (tripID != -1 && preSque != -1) {
     					Node curNode = arrayOfNodes[last_stop];
-    					if ((sque - preSque == 1 && tripID == preTripID) || (sque - preSque != 1 && tripID != preTripID)) {
+    					if ((sque - preSque == 1 && tripID == preTripID)) {
     						if (curNode.next == null) {
     							curNode.next = new linkedList(arrayOfNodes[cur_stop], type, transfer_time);
     						}
@@ -120,7 +120,7 @@ public class Dijkstra {
     							}
     						}
     					}
-    					else {System.out.println("File not formated correctly");}
+    					else if (sque - preSque > 0){System.out.println("oh no");}
     				}
     				last_stop = cur_stop;
     				preTripID = tripID;
