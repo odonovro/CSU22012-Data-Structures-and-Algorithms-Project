@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TST {
@@ -192,6 +194,57 @@ public class TST {
             }
         }
         if (c == '.' || c > x.c) collect(x.right, prefix, i, pattern, queue);
+    }
+    
+    void fileToTST(File file){
+		try {
+			Scanner txt = new Scanner(file);
+	    	String line = txt.nextLine();
+    		while (txt.hasNextLine()) {
+    			line = txt.nextLine();
+    	    	String[] temp_string = line.split(",");
+    	    	Info INFO = new Info(temp_string);
+    	    	String[] name = INFO.name.split(" ");
+    	    	INFO.name = "";
+    	    	for (int i = 0 ; i < name.length ; i++) {
+    	    		if (name[i].compareTo("WB") == 0 || name[i].compareTo("NB") == 0 || name[i].compareTo("SB") == 0 || name[i].compareTo("EB") == 0 || name[i].compareTo("FLAGSTOP") == 0) {
+    	    			String[] temp = new String[name.length];
+    	    			for (int j = 0 ; j < name.length; j ++) {
+    	    				temp[j] = name[j];
+    	    			}
+    	    			name[name.length-1] = temp[0];
+    	    			for (int j = 1 ; j+1 < name.length; j ++) {
+    	    				name[j-1] = temp[j];
+    	    			}
+    	    		}
+    	    		INFO.name = INFO.name + " " + name[i];
+    	    	}
+    	    	this.put(INFO.name, INFO);
+    		}
+	    	txt.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public Iterable<Info> infoWithPrefix(String prefix) {
+        if (prefix == null) {
+            throw new IllegalArgumentException("calls infoWithPrefix() with null argument");
+        }
+        Queue<Info> queue = new Queue<Info>();
+        Node x = get(root, prefix, 0);
+        if (x == null) return queue;
+        if (x.val != null) queue.enqueue(x.val);
+        infoWithPrefix(x.mid, queue);
+        return queue;
+    }
+
+    private void infoWithPrefix(Node x, Queue<Info> queue) {
+        if (x == null) return;
+        infoWithPrefix(x.left, queue);
+        infoWithPrefix(x.mid, queue);
+        infoWithPrefix(x.right, queue);
+        if (x.val != null) queue.enqueue(x.val);
     }
     
     public static void main(String args[])

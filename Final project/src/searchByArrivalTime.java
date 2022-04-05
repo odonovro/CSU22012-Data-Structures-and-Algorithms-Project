@@ -40,10 +40,10 @@ public class searchByArrivalTime {
 			shape_dist_traveled = details[8];
 			}
 			else {
-				for(int i = 0 ; i < details.length ; i++) {
-				//System.out.println(details[i]);
-					}
-				//System.out.println("\n \n \n \n");
+				shape_dist_traveled = "";
+//				for(int i = 0 ; i < details.length ; i++) {
+//					System.out.println(details[i]);
+//					}
 				}
 			}
 		}
@@ -103,7 +103,7 @@ public class searchByArrivalTime {
 			if (hour == this.allData[i].arr_hour && min == this.allData[i].arr_min && sec == this.allData[i].arr_sec) {
 				arr[j] = this.allData[i];
 				j++;
-				if (j > arr.length) {
+				if (j == arr.length - 2) {
 					trip_details[] temp = new trip_details[arr.length*2];
 					for (int k = 0 ; k < arr.length; k++) {
 						temp[k] = arr[k];
@@ -118,11 +118,74 @@ public class searchByArrivalTime {
 	
 
 	public static void main(String args[]) {
-		File input = new File("stop_times.txt");
+		File inputFile = new File("stop_times.txt");
 		searchByArrivalTime ADS = new searchByArrivalTime(2000000);
-		ADS.FileToData(input);
+		ADS.FileToData(inputFile);
 		
-		trip_details[] searchResults = ADS.search(5, 25, 00);
+		System.out.println("Hours");
+		Scanner Scannerinput = new Scanner(System.in);
+        int H, M, S;
+        
+        String inputH = Scannerinput.nextLine();
+        while (true) {
+        	try {
+        		H = Integer.parseInt(inputH);
+        		if (H < 24 && H >= 0) {
+        			break;
+        		}
+        		else {
+        			System.out.println("invalid input");
+        			System.out.println("Hours");
+        			inputH = Scannerinput.nextLine();
+        		}
+        	}
+        	catch(Exception e){
+        		System.out.println("Hours");
+            	inputH = Scannerinput.nextLine();
+        	}
+        }
+        System.out.println("Minites");
+        String inputM = Scannerinput.nextLine();
+        while (true) {
+        	try {
+        		M = Integer.parseInt(inputM);
+        		if (M < 60 && M >= 0) {
+        			break;
+        		}
+        		else {
+        			System.out.println("invalid input");
+        			System.out.println("Minites");
+        			inputM = Scannerinput.nextLine();
+        		}
+        	}
+        	catch(Exception e){
+        		System.out.println("Minites");
+            	inputM = Scannerinput.nextLine();
+        	}
+        }
+        System.out.println("Seconds");
+        String inputS = Scannerinput.nextLine();
+        while (true) {
+        	try {
+        		S = Integer.parseInt(inputS);
+        		if (S < 60 && S >= 0) {
+        			break;
+        		}
+        		else {
+        			System.out.println("invalid input");
+        			System.out.println("Seconds");
+        			inputS = Scannerinput.nextLine();
+        		}
+        	}
+        	catch(Exception e){
+        		System.out.println("Seconds");
+            	inputS = Scannerinput.nextLine();
+        	}
+        }
+        
+        
+		
+		trip_details[] searchResults = ADS.search(H, M, S);
 		//insertionSort(searchResults);
 		
 		
@@ -131,6 +194,7 @@ public class searchByArrivalTime {
 			System.out.println(searchResults[i].arrival_time + "	" +searchResults[i].trip_id);
 		}
 		System.out.println("fin");
+		Scannerinput.close();
 	}
 	
 }

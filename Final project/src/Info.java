@@ -21,7 +21,12 @@ public class Info{
 				zoneID = INFO[6];
 				url = INFO[7];
 				type = INFO[8];
-				parentStation = INFO[9];
+				if (INFO.length == 10) {
+					parentStation = INFO[9];
+					}
+					else {
+						parentStation = "";
+						}
 			}
 			
 		}

@@ -186,15 +186,28 @@ public class Dijkstra {
     	
     	System.out.println("graph done");
     	
-    	Node start = myGraph.arrayOfNodes[646];
+    	Scanner Scannerinput = new Scanner(System.in);
+        String input;
+        
+        
+        System.out.println("What is your Starting Node: ");
+        input = Scannerinput.nextLine();
+    	
+    	Node start = myGraph.arrayOfNodes[Integer.parseInt(input)];
+    	
+    	System.out.println("What is your Ending Node: ");
+    	input = Scannerinput.nextLine();
     	
     	int [][] test = runDijkstra(start, myGraph);
     	
-    	for (int i = 0 ; i < test.length ; i ++) {
-    		if (test[i][0] != Integer.MAX_VALUE) {
-    		System.out.println(i + " " + test[i][0] + " " +  test[i][1]);}
-    	}
+    	System.out.println(test[Integer.parseInt(input)][0]);
     	
+//    	for (int i = 0 ; i < test.length ; i ++) {
+//    		if (test[i][0] != Integer.MAX_VALUE) {
+//    		System.out.println(i + " " + test[i][0] + " " +  test[i][1]);}
+//    	}
+    	
+    	Scannerinput.close();
     	System.out.println("fin");
     }
 
