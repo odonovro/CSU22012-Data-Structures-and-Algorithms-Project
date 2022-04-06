@@ -204,21 +204,27 @@ public class TST {
     			line = txt.nextLine();
     	    	String[] temp_string = line.split(",");
     	    	Info INFO = new Info(temp_string);
+    	    	
+    	    	System.out.println(INFO.name);
     	    	String[] name = INFO.name.split(" ");
-    	    	INFO.name = "";
-    	    	for (int i = 0 ; i < name.length ; i++) {
+    	    	String temp;
+    	    	int k = 0;
+    	    	for (int i = 0 ; i < name.length - k; i++) {
     	    		if (name[i].compareTo("WB") == 0 || name[i].compareTo("NB") == 0 || name[i].compareTo("SB") == 0 || name[i].compareTo("EB") == 0 || name[i].compareTo("FLAGSTOP") == 0) {
-    	    			String[] temp = new String[name.length];
-    	    			for (int j = 0 ; j < name.length; j ++) {
-    	    				temp[j] = name[j];
+    	    			temp = name[i];
+    	    			for (int j = i ; j < name.length - 1; j ++) {
+    	    				name[j] = name[j+1];
     	    			}
-    	    			name[name.length-1] = temp[0];
-    	    			for (int j = 1 ; j+1 < name.length; j ++) {
-    	    				name[j-1] = temp[j];
-    	    			}
+    	    			name[name.length -1] = temp;
+    	    			i--;
+    	    			k++;
     	    		}
-    	    		INFO.name = INFO.name + " " + name[i];
     	    	}
+    	    	INFO.name = "";
+    	    	for(int i = 0 ; i < name.length ; i++) {
+    	    		INFO.name = INFO.name + name[i] + " ";
+    	    	}
+    	    	System.out.println(INFO.name);
     	    	this.put(INFO.name, INFO);
     		}
 	    	txt.close();

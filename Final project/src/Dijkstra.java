@@ -202,10 +202,10 @@ public class Dijkstra {
     	
     	System.out.println(test[Integer.parseInt(input)][0]);
     	
-//    	for (int i = 0 ; i < test.length ; i ++) {
-//    		if (test[i][0] != Integer.MAX_VALUE) {
-//    		System.out.println(i + " " + test[i][0] + " " +  test[i][1]);}
-//    	}
+    	for (int i = 0 ; i < test.length ; i ++) {
+    		if (test[i][0] != Integer.MAX_VALUE) {
+    		System.out.println(i + " " + test[i][0] + " " +  test[i][1]);}
+    	}
     	
     	Scannerinput.close();
     	System.out.println("fin");
