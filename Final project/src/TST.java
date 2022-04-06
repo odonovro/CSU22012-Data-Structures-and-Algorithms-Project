@@ -205,7 +205,6 @@ public class TST {
     	    	String[] temp_string = line.split(",");
     	    	Info INFO = new Info(temp_string);
     	    	
-    	    	System.out.println(INFO.name);
     	    	String[] name = INFO.name.split(" ");
     	    	String temp;
     	    	int k = 0;
@@ -224,7 +223,6 @@ public class TST {
     	    	for(int i = 0 ; i < name.length ; i++) {
     	    		INFO.name = INFO.name + name[i] + " ";
     	    	}
-    	    	System.out.println(INFO.name);
     	    	this.put(INFO.name, INFO);
     		}
 	    	txt.close();

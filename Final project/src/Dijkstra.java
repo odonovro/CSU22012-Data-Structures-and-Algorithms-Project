@@ -85,7 +85,7 @@ public class Dijkstra {
     	    			}
     				}
     		}
-    		else { //TODO
+    		else {
     			int last_stop = -1;
     			int tripID = -1;
 				int sque = -1;
@@ -136,7 +136,7 @@ public class Dijkstra {
 
     static int[][] runDijkstra(Node start, graph myGraph) {
     	Node[] arrayOfNodes = myGraph.arrayOfNodes;
-        int intersections = 20000;
+        int intersections = 15000;
         int[][] ShortPath = new int[intersections][2];
         for (int i = 0 ; i < intersections; i++) {
         	ShortPath[i][0] = Integer.MAX_VALUE;
@@ -144,8 +144,7 @@ public class Dijkstra {
         
         Node x = start;
         ShortPath[x.stopID][0] = 0 ;
-        
-        for (int i = 0; i < intersections; i++) {
+        while (true) {
         	linkedList nextToX = x.next;
             	while (true) { if (nextToX == null) {break;}
             		if ((ShortPath[nextToX.node.stopID][0] > nextToX.cost + ShortPath[x.stopID][0]) && ShortPath[x.stopID][0]!= Integer.MAX_VALUE) {
