@@ -27,10 +27,6 @@ public class runProgram {
     	}
 	}
 	
-	void SearchingForABusStopByFullName(){
-		
-	}
-	
 	static void SearchingForAllTripsWithAGivenArrivalTime(int H, int M, int S, searchByArrivalTime ADS){
 		searchByArrivalTime.trip_details[] searchResults = ADS.search(H, M, S);
 		searchByArrivalTime.insertionSort(searchResults);
@@ -46,9 +42,9 @@ public class runProgram {
 	public static void main(String args[]){
 		System.out.println("Program Started");
 		//Files
-		File transfersFile = new File("transfers.txt");
-		File stopTimeFile = new File("stop_times.txt");
-		File stopsFile = new File("stops.txt");
+		File transfersFile = new File("src/transfers.txt");
+		File stopTimeFile = new File("src/stop_times.txt");
+		File stopsFile = new File("src/stops.txt");
 		
 		//Load Dijkstra Graph from File
 			System.out.println("Loading Dijkstra graph please wait...");
