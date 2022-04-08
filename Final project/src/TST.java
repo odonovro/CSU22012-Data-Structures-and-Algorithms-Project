@@ -221,7 +221,9 @@ public class TST {
     	    	}
     	    	INFO.name = "";
     	    	for(int i = 0 ; i < name.length ; i++) {
-    	    		INFO.name = INFO.name + name[i] + " ";
+    	    		if (name[i] != " ") {
+    	    			INFO.name = INFO.name + name[i] + " ";
+    	    		}
     	    	}
     	    	this.put(INFO.name, INFO);
     		}
@@ -251,98 +253,4 @@ public class TST {
         if (x.val != null) queue.enqueue(x.val);
     }
     
-    public static void main(String args[])
-    {
-		TST tst = new TST();
-		//System.out.println(Character.compare('e', 'h')); // -3
-		
-		String[] str = new String[10];
-		for (int i = 0 ; i < 10 ; i++) {
-			str[i] = null;
-		}
-		str[2] = "she";
-		Info test1 = new Info(str);
-		str[2] = "sells";
-		Info test2 = new Info(str);
-		str[2] = "sea";
-		Info test3 = new Info(str);
-		str[2] = "shells";
-		Info test4 = new Info(str);
-		str[2] = "by";
-		Info test5 = new Info(str);
-		str[2] = "the";
-		Info test6 = new Info(str);
-		str[2] = "sea";
-		Info test7 = new Info(str);
-		str[2] = "shore";
-		Info test8 = new Info(str);
-		
-		String name;
-		name = test1.name;
-		tst.put(name, test1);
-		name = test2.name;
-		tst.put(name, test2);
-		name = test3.name;
-		tst.put(name, test3);
-		name = test4.name;
-		tst.put(name, test4);
-		name = test5.name;
-		tst.put(name, test5);
-		name = test6.name;
-		tst.put(name, test6);
-		name = test7.name;
-		tst.put(name, test7);
-		name = test8.name;
-		tst.put(name, test8);
-        
-        Scanner Scannerinput = new Scanner(System.in);
-        String input;
-        Node current = tst.root;
-        
-        String lv = " ";
-        String mv = " ";
-        String rv = " ";
-        
-        for (int i = 0; i < 2; i--) {
-        	input = Scannerinput.nextLine();
-        	if (input.compareTo("end") == 0) {break;}
-        	
-        	if (input.compareTo("l") == 0) {
-        		current = current.left;
-        	}
-        	if (input.compareTo("r") == 0) {
-        		current = current.right;
-        	}
-        	if (input.compareTo("m") == 0) {
-        		current = current.mid;
-        	}
-        	if (input.compareTo(";") == 0) {
-        		current = tst.root;
-        	}
-        	
-        	if (current == tst.root) {
-        		System.out.println(current.c);
-        	}
-        	
-        	if (current.left == null) {current.left = new Node(); current.left.c = ' ';}
-        	if (current.mid == null) {current.mid = new Node(); current.mid.c = ' ';}
-        	if (current.right == null) {current.right = new Node(); current.right.c = ' ';}
-        	
-        	if (current.left.val != null) {lv = current.left.val.name;}
-        	if (current.mid.val != null) {mv = current.mid.val.name;}
-        	if (current.right.val != null) {rv = current.right.val.name;}
-        	
-        	System.out.println(current.left.c + " " + lv + "	" + current.mid.c + " " + mv + "	" + current.right.c + " " + rv);
-        	
-        	lv = " ";
-        	mv = " ";
-        	rv = " ";
-        }
-        
-        Scannerinput.close();
-        
-        
-        System.out.println("fin");
-        
-    }
 }

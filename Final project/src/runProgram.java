@@ -11,14 +11,14 @@ public class runProgram {
     	int cost = test[endID][0];
     	
     	if(cost == Integer.MAX_VALUE) {
-    		System.out.println("The cost to get from stop " + startID + " to stop " + endID + " is " + "inf");
+    		System.out.println("The cost to get from stop " + startID + " to stop " + endID + " is " + "infinity: there is no root between your entered stops");
     	}
     	else {
     		System.out.println("The cost to get from stop " + startID + " to stop " + endID + " is " + cost);
     		System.out.println("Route is as follows");
     		int to_stopID = endID;
     		int from_stopID = test[to_stopID][1];
-        	while (startID != from_stopID){
+        	while (startID != from_stopID && from_stopID != to_stopID){
         		System.out.println("from stopID: " + from_stopID + "	to stopID: " + to_stopID + "  " +"	cost: " + (test[to_stopID][0]-test[from_stopID][0]));
         		to_stopID = from_stopID;
         		from_stopID = test[from_stopID][1];
@@ -71,7 +71,6 @@ public class runProgram {
 		
 		System.out.println("Loading Done \n \n \n");
 		
-		int temp;
 		Scanner Scannerinput = new Scanner(System.in);
 		while (true) {
 			System.out.println("Program Select: ");
@@ -97,32 +96,34 @@ public class runProgram {
 							System.out.println("Please enter the stop ID of your starting stop");
 							Start = Scannerinput.nextLine();
 							try {
-								temp = Integer.parseInt(Start);
-								if (myGraph.arrayOfNodes.length > temp) {
-									break;
-								}
-								else {
-									System.out.println("Your input is out of range for Stop ID");
-								}
+								Integer.parseInt(Start);
 							}
 							catch(Exception e){
 								System.out.println("Please enter a integer for the stop ID");
+								continue;
+							}
+							if (myGraph.arrayOfNodes.length > Integer.parseInt(Start)) {
+								break;
+							}
+							else {
+								System.out.println("Your input is out of range for Stop ID");
 							}
 						}
 						while (true) {
 							System.out.println("Please enter the stop ID of your ending stop");
 							End = Scannerinput.nextLine();
 							try {
-								temp = Integer.parseInt(End);
-								if (myGraph.arrayOfNodes.length > temp) {
-									break;
-								}
-								else {
-									System.out.println("Your input is out of range for Stop ID");
-								}
+								Integer.parseInt(End);
 							}
 							catch(Exception e){
 								System.out.println("Please enter a integer for the stop ID");
+								continue;
+							}
+							if (myGraph.arrayOfNodes.length > Integer.parseInt(End)) {
+								break;
+							}
+							else {
+								System.out.println("Your input is out of range for Stop ID");
 							}
 						}
 					}
@@ -178,10 +179,8 @@ public class runProgram {
 						break;
 					}
 					else {
-						System.out.println("Hours");
-				        inputH = Scannerinput.nextLine();
 						while (true) {
-							System.out.println("Hours");
+							System.out.println("Please enter the hour of your arrival time");
 					        inputH = Scannerinput.nextLine();
 				        	try {
 				        		H = Integer.parseInt(inputH);
@@ -189,52 +188,43 @@ public class runProgram {
 				        			break;
 				        		}
 				        		else {
-				        			System.out.println("invalid input");
-				        			System.out.println("Hours");
-				        			inputH = Scannerinput.nextLine();
+				        			System.out.println("invalid input: hour must be between 0 and 23");
 				        		}
 				        	}
 				        	catch(Exception e){
-				        		System.out.println("Hours");
-				            	inputH = Scannerinput.nextLine();
+				        		System.out.println("invalid input: please enter as an integer");
 				        	}
 				        }
-				        System.out.println("Minites");
-				        inputM = Scannerinput.nextLine();
 				        while (true) {
+				        	System.out.println("Please enter the minute of your arrival time");
+					        inputM = Scannerinput.nextLine();
 				        	try {
 				        		M = Integer.parseInt(inputM);
 				        		if (M < 60 && M >= 0) {
 				        			break;
 				        		}
 				        		else {
-				        			System.out.println("invalid input");
-				        			System.out.println("Minites");
-				        			inputM = Scannerinput.nextLine();
+				        			System.out.println("invalid input: minute must be between 0 and 59");
 				        		}
 				        	}
 				        	catch(Exception e){
-				        		System.out.println("Minites");
-				            	inputM = Scannerinput.nextLine();
+				        		System.out.println("invalid input: please enter as an integer");
 				        	}
 				        }
-				        System.out.println("Seconds");
-				        inputS = Scannerinput.nextLine();
 				        while (true) {
+					        System.out.println("Please enter the second of your arrival time");
+					        inputS = Scannerinput.nextLine();
 				        	try {
 				        		S = Integer.parseInt(inputS);
 				        		if (S < 60 && S >= 0) {
 				        			break;
 				        		}
 				        		else {
-				        			System.out.println("invalid input");
-				        			System.out.println("Seconds");
-				        			inputS = Scannerinput.nextLine();
+				        			System.out.println("invalid input: second must be between 0 and 59");
 				        		}
 				        	}
 				        	catch(Exception e){
-				        		System.out.println("Seconds");
-				            	inputS = Scannerinput.nextLine();
+				        		System.out.println("invalid input: please enter as an integer");
 				        	}
 				        }
 					}
