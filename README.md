@@ -14,6 +14,7 @@ I also considered using the Floyd-Warshall algorithm. My idea was to run this al
 This gives us (V^2/E*log(V)) ≈ ((1.7 *10^6)^2 / (9*10^3 * log(1.7 *10^6))) ≈ 51539000 )
 
 When it comes to my implementation of Dijkstra I initially considered implementing a [edge][edge] array to store my graph (This is how I wrote my Dijkstra for assignment 2) but since there are ≈ 8000 edges this array would take around 64*10^6 integer entries. Because of this, I decided to instead implement an adjacency list graph representation. I did this using an array with E entries where each entry refers to a specific edge and points to a directed edge object. For a given entry x of the array, x would point to a directed edge object that has an entry next. This next entry will point to another directed edge object that has x as its source, and so on. 
+
 for example 
 array[0]	=	(1)
 (1).next 	= 	(2)	
