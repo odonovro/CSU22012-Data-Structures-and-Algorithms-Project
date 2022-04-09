@@ -140,7 +140,7 @@ public class runProgram {
 		while (true) {
 			System.out.println("Program Select: ");
 			System.out.println("Type (1) for shortest path between 2 Points");
-			System.out.println("Type (2) for searching for a bus stop by full name");
+			System.out.println("Type (2) for searching for a bus stop by first few character of its name");
 			System.out.println("Type (3) for searching for all trips with a given arrival time");
 			System.out.println("Type (exit) to exit the program");
 			String input = Scannerinput.nextLine();
@@ -200,7 +200,7 @@ public class runProgram {
 			
 			if (input.compareTo("2") == 0 || input.compareTo("(2)") == 0) {
 				while (true) {
-					System.out.println("\n \n \n You are running search for a bus stop by full name");
+					System.out.println("\n \n \n You are running search for a bus stop by first few character in name");
 					System.out.println("If you want to return to Program Select type (return) otherwise press enter");
 					input = Scannerinput.nextLine();
 					if (input.compareTo("return") == 0 || input.compareTo("(return)") == 0) {
