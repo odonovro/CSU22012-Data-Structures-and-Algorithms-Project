@@ -24,15 +24,18 @@ O(E + E*(average number of vertexes from an edge))
 but
 (average number of vertexes from an edge) = (V/E)
 therefore we get a space complexity of E + E*(V/E) = V + E. 
-Since in our case E ≈ 8*10^3 and V ≈ 1.6 *10^6 therefore our complexity is around 1.6 *10^6. This is much better than 64*10^6 discussed above. 
+Since in our case E ≈ 8*10^3 and V ≈ 1.7 *10^6 therefore our complexity is around 1.7 *10^6. This is much better than 64*10^6 discussed above. 
 
 The downside of the adjacency list representation compared to the [edge] by [edge] array is, an [edge] by [edge] array has instant access time for any specific directed edge whereas the adjacency list takes (V/E) time (as we would have to iterate over the directed edges at a specific entry of the array). 
 This is not a problem however as when running Dijkstra we are not interested in specifically directed edges but rather we have to iterate overall directed edges from each edge. 
 
 2. Searching for a bus stop by full name or by the first few characters in the name, using a ternary search tree (TST)
 
-While I didn't get to choose what algorithm I wanted to use for this section I think that TST is still the best choice. This is because it has a run time for finding an item of O(L + ln(N)). And considering that in our case (10^1 < L < 10^2) and ln(N ≈ 10^3)≈7. This is much faster than naive search methods like linear search which has a time complexity of O(N). 
+While I didn't get to choose what algorithm I wanted to use for this section I think that TST is still the best choice. This is because it has a run time to find an item of O(L + ln(N)). And considering that in our case (10^1 < L < 10^2) and ln(N ≈ 10^3)≈7. This is much faster than naive search methods like linear search which has a time complexity of O(N ≈  10^3). 
+
+An alternative I may have considered if the algorithm were not prescribed would have been to sort the data in alphabetical order. Then use binary search to find the relevant names. This would have a time complexity of O(n log(n)) at run time and O(log n) for each search. These time complexities aren't too bad compared to TST. But the reason TST would win out in my option is Space complexity. TST have a space complexity of Ω(L) and O(N*L) but is lightly somewhere in between. Whereas storing the sorted data has a space complexity of Ω(N*L) and O(N*L). 
+
 
 3. Searching for all trips with a given arrival time, returning full details of all trips matching the criteria (zero, one or more), sorted by trip id
 
-For this I 
+For this, I implemented a linear search that added elements to a resizing array as they were found. Linear search runs in O(N) time. And in our case N ≈ 1.7 *10^6. This should take under a second on modern devices. for the resizing array, I initialized it with a size of 128. This means if there were less than 128 positive results (which happens in the vast majority of searches) the array would not need to resize. This gives it a time complexity of O(128) and space complexity of O(128) in most cases.  Once the array of positive search results is returned I then call insertion sort on it. This would have a cost of approximately O(N^2). 
