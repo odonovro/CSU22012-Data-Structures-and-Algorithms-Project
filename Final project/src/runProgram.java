@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -39,6 +40,68 @@ public class runProgram {
 		}
 	}
 	
+	static int maxStopID(File stops) {
+		int max = -1;
+		Scanner txt;
+		try {
+			txt = new Scanner(stops);
+			String line = txt.nextLine();
+			
+			while (txt.hasNextLine()) {
+				line = txt.nextLine();
+				String[] temp = line.split(",");
+				
+				if(max < Integer.parseInt(temp[0])) {
+					max = Integer.parseInt(temp[0]);
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return max;
+	}
+	
+	static boolean[] validStopIDS(File stops, int max_stopID) {
+		boolean[] valid_stopIDs = new boolean[max_stopID + 1];
+		for (int i = 0 ; i < max_stopID ; i++) {
+			valid_stopIDs[i]  = false;
+		}
+		Scanner txt;
+		try {
+			txt = new Scanner(stops);
+			String line = txt.nextLine();
+			
+			while (txt.hasNextLine()) {
+				line = txt.nextLine();
+				String[] temp = line.split(",");
+				valid_stopIDs[Integer.parseInt(temp[0])] = true;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return valid_stopIDs;
+	}
+	
+	static int numberOfBusRoots(File stop_times) {
+		int i = 1;
+		
+		try {
+			Scanner s_txt = new Scanner(stop_times);
+			while (s_txt.hasNextLine()) {
+				s_txt.nextLine();
+				i++;
+			}
+			s_txt.close();
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return i;
+	}
+	
+	
 	public static void main(String args[]){
 		System.out.println("Program Started");
 		//Files
@@ -46,9 +109,15 @@ public class runProgram {
 		File stopTimeFile = new File("src/stop_times.txt");
 		File stopsFile = new File("src/stops.txt");
 		
+		//find valid stopIDs and max stop
+		int max_stopID = maxStopID(stopsFile);
+		boolean[] valid_stopIDs = validStopIDS(stopsFile, max_stopID);
+		
+		int number_of_bus_roots = numberOfBusRoots(stopTimeFile);
+		
 		//Load Dijkstra Graph from File
 			System.out.println("Loading Dijkstra graph please wait...");
-			Dijkstra.graph myGraph = new Dijkstra.graph();
+			Dijkstra.graph myGraph = new Dijkstra.graph(max_stopID + 1);
 			Dijkstra.addToGraph(transfersFile, true, myGraph);
 			Dijkstra.addToGraph(stopTimeFile, false, myGraph);
 			System.out.println("Dijkstra graph loaded");   
@@ -61,7 +130,7 @@ public class runProgram {
 			
 		//Load ArrivalTime from File
 			System.out.println("Loading ArrivalTime data please wait..."); 
-			searchByArrivalTime ADS = new searchByArrivalTime(2000000);
+			searchByArrivalTime ADS = new searchByArrivalTime(number_of_bus_roots);
 			ADS.FileToData(stopTimeFile);
 			System.out.println("ArrivalTime data loaded"); 
 		
@@ -98,11 +167,11 @@ public class runProgram {
 								System.out.println("Please enter a integer for the stop ID");
 								continue;
 							}
-							if (myGraph.arrayOfNodes.length > Integer.parseInt(Start)) {
+							if (0 < Integer.parseInt(Start) && valid_stopIDs.length > Integer.parseInt(Start) && valid_stopIDs[Integer.parseInt(Start)]) {
 								break;
 							}
 							else {
-								System.out.println("Your input is out of range for Stop ID");
+								System.out.println("There is no Stop ID " + Start);
 							}
 						}
 						while (true) {
@@ -115,11 +184,11 @@ public class runProgram {
 								System.out.println("Please enter a integer for the stop ID");
 								continue;
 							}
-							if (myGraph.arrayOfNodes.length > Integer.parseInt(End)) {
+							if (0 < Integer.parseInt(End) && valid_stopIDs.length > Integer.parseInt(End) && valid_stopIDs[Integer.parseInt(End)]) {
 								break;
 							}
 							else {
-								System.out.println("Your input is out of range for Stop ID");
+								System.out.println("There is no Stop ID " + End);
 							}
 						}
 					}

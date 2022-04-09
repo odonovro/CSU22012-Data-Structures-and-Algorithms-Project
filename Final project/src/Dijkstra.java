@@ -39,8 +39,8 @@ public class Dijkstra {
     static class graph{
     	Node[] arrayOfNodes;
     	
-    	graph(){
-    		Node[] temp = new Node[20000];
+    	graph(int number_of_edges){
+    		Node[] temp = new Node[number_of_edges];
         	for (int i = 0 ; i < temp.length; i++) {
         		temp[i] = new Node(i);
         	}
@@ -134,7 +134,7 @@ public class Dijkstra {
 
     static int[][] runDijkstra(Node start, graph myGraph) {
     	Node[] arrayOfNodes = myGraph.arrayOfNodes;
-        int intersections = 20000;
+        int intersections = arrayOfNodes.length;
         int[][] ShortPath = new int[intersections][2];
         boolean[] visited = new boolean[intersections];
         for (int i = 0 ; i < intersections; i++) {
